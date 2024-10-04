@@ -58,7 +58,7 @@ async def hola(nombre : Union[str, None] = None):   # endpoint: api/v2/hola?nomb
         nombre = "mundo"                              
     return {"message": "Hola, " + nombre}
 
-# 3.1. Alternativa mñas sencilla
+# 3.1. Alternativa más sencilla
 
 path = "/api/v3/"
 
@@ -93,6 +93,7 @@ async def create_item(item: Item):
 
 @api.put(path + "items/{id}")          
 async def update_item(id: int, item: Item):
+
     item.precio += 10
     return item
 
@@ -101,6 +102,7 @@ async def update_item(id: int, item: Item):
 
 @api.delete(path + "items/{id}")          
 async def remove_item(id: int, response : Response):
+
     response.status_code=404                        # cambio el status code dependiendo de alguna condicion
     return {"message": "Item no encontrado" }
     
