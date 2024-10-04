@@ -70,14 +70,11 @@ async def hola(nombre : str = "mundo"):             # endpoint: api/v3/hola?nomb
 
 @api.get(path + "hola/{nombre}")                      
 async def hola(nombre : str, saludo : Union[str, None] = None):
-
     if saludo != None :                            # endpoint: api/v3/hola/{nombre}?saludo=<saludo>
         saludo = ", " + saludo                     #     p.ej. api/v3/hola/Pepe?saludo=qué%20tal%20estás?
     else:
         saludo = ""
-
     return {"message": "Hola, " + nombre + saludo}
-
 
 path = "/api/v4/"
 
@@ -85,24 +82,19 @@ path = "/api/v4/"
 
 @api.post(path + "items", status_code=201)         # response status code por defecto 
 async def create_item(item: Item):
-    
     return item
-
 
 # 6. PUT con objeto actualizado en el body
 
 @api.put(path + "items/{id}")          
 async def update_item(id: int, item: Item):
-
     item.precio += 10
     return item
-
 
 # 7. DELETE, con código de estado condicionado
 
 @api.delete(path + "items/{id}")          
 async def remove_item(id: int, response : Response):
-
     response.status_code=404                        # cambio el status code dependiendo de alguna condicion
     return {"message": "Item no encontrado" }
     
