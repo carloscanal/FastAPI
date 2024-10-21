@@ -88,9 +88,12 @@ async def create_item(item: Item):
 
 @api.put(path + "items/{id}")          
 async def update_item(id: int, 
-                      item: Annotated[Item,Body(examples=[{"nombre" : "Lola",
-                                                           "descripcion": "Vendo moto ROJA, como nueva",
-                                                           "precio": 18.0}])]
+                      item: Annotated[Item, 
+                                      Body(examples=[{"nombre" : "Lola",
+                                                      "descripcion": "Vendo moto ROJA, como nueva",
+                                                      "precio": 18.0}]
+                                        )
+                                    ]
                      ):
     item.precio = 18.0
     return item
