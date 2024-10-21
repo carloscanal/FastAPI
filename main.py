@@ -1,16 +1,15 @@
 
         
-from fastapi import FastAPI, Response               # FastAPI
+from fastapi import FastAPI, Response, Body         # FastAPI
 from fastapi.middleware.cors import CORSMiddleware  # CORS, permitir origenes como swagger.io
-from typing import Union                            # typing, anotacionesiones de tipos
-from pydantic import BaseModel                      # pydantic, comprobaciones de tipos en runtime; tipos complejos
+from typing import Union, Annotated                 # typing, anotacionesiones de tipos (para ejemplos OpenAPI)
+from pydantic import BaseModel, Field               # pydantic, comprobaciones de tipos en runtime; tipos complejos
 
 
 class Item(BaseModel):
-    nombre: str = "Anónimo"
-    descripcion: Union[str, None] = None
-    precio: int = 0
-
+    nombre: str = Field(default="Anónimo",examples=["Pepe"])
+    descripcion: Union[str, None] = Field(default=None,examples=["Vendo moto, casi nueva"])
+    precio: int = Field(default=0,examples=[10.0])
 
 # ejecutar con    python -m uvicorn main:api --reload --port 8000
 
@@ -18,7 +17,7 @@ class Item(BaseModel):
 api = FastAPI()
 
 origins = [
-    "https://editor.swagger.io"                     # para probar con OpenAPI desde Swagger
+   "https://editor.swagger.io"                     # para probar con OpenAPI desde Swagger
 ]
 
 api.add_middleware(
@@ -44,6 +43,7 @@ async def hola():                                   # o simplemente con def
 
 @api.get(path + "hola/{nombre}")                    # endpoint: api/v1/hola/{nombre}    (Parámetro de Path)
 async def hola(nombre : str):
+
     return {"message": "Hola, " + nombre}
 
 
@@ -87,9 +87,14 @@ async def create_item(item: Item):
 # 6. PUT con objeto actualizado en el body
 
 @api.put(path + "items/{id}")          
-async def update_item(id: int, item: Item):
-    item.precio += 10
+async def update_item(id: int, 
+                      item: Annotated[Item,Body(examples=[{"nombre" : "Lola",
+                                                           "descripcion": "Vendo moto ROJA, como nueva",
+                                                           "precio": 18.0}])]
+                     ):
+    item.precio = 18.0
     return item
+
 
 # 7. DELETE, con código de estado condicionado
 
