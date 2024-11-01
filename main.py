@@ -11,7 +11,7 @@ class Item(BaseModel):
     descripcion: Union[str, None] = Field(default=None,examples=["Vendo moto, casi nueva"])
     precio: int = Field(default=0,examples=[10.0])
 
-# ejecutar con    python -m uvicorn main:api --reload --port 8000
+# ejecutar con    python -m uvicorn main:api --reload --host 0.0.0.0 --port 8000
 
 
 api = FastAPI()
