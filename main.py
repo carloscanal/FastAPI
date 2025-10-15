@@ -84,6 +84,12 @@ path = "/api/v4/"
 async def create_item(item: Item):
     return item
 
+# Probar con curl (o con OpenAPI en http://localhost:8000/docs)
+#
+# curl http://localhost:8000/api/v4/items -X POST  --json {} --noproxy localhost
+#
+# --noproxy localhost es necesario para esquivar el proxy UMA en la máquina virtual o los ordenadores del laboratorio
+
 # 6. PUT con objeto actualizado en el body
 
 @api.put(path + "items/{id}")          
@@ -97,7 +103,6 @@ async def update_item(id: int,
                      ):
     item.precio = 18.0
     return item
-
 
 # 7. DELETE, con código de estado condicionado
 
