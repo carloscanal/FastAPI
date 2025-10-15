@@ -86,9 +86,9 @@ async def create_item(item: Item):
 
 # Probar con curl (o con OpenAPI en http://localhost:8000/docs)
 #
-# curl http://localhost:8000/api/v4/items -X POST  --json {} --noproxy localhost
+# curl http://localhost:8000/api/v4/items -X POST --json {} --noproxy localhost
 #
-# --noproxy localhost es necesario para esquivar el proxy UMA en la máquina virtual o los ordenadores del laboratorio
+# --noproxy localhost solo es necesario en la máquina virtual o los ordenadores del laboratorio, para esquivar el proxy UMA 
 
 # 6. PUT con objeto actualizado en el body
 
